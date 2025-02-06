@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+form {
+  text-align: center;
+  padding: 30px;
+}
+h1,
+h3 {
+  text-align: center;
+  padding: 30px;
+}
+h5 {
+  padding: 10px 0;
+}
+li {
+  padding: 30px;
+}
+input {
+  padding: 6px 0;
+  margin: 10px 0;
+}
+.content {
+  min-height: 80px;
+}
+button {
+  padding: 6px 10px;
+}
