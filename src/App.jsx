@@ -2,25 +2,25 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function App() {
-  const [article, setArticle] = useState([]);
-  const [articleList, setArticleList] = useState({
+  const [posts, setPosts] = useState([]);
+  const [postsList, setPostsList] = useState({
     title: "",
     tags: "",
     content: "",
     image: "",
   });
 
-  const fetchArticle = () => {
+  const fetchPosts = () => {
     axios.get("http://localhost:3000/posts").then(function (response) {
-      setArticle(response.data);
+      setPosts(response.data);
     });
   };
 
-  useEffect(fetchArticle, []);
+  useEffect(fetchPosts, []);
 
   const handleField = (fieldName, value) => {
-    setArticleList((currentArticleList) => ({
-      ...currentArticleList,
+    setPostsList((currentPostsList) => ({
+      ...currentPostsList,
       [fieldName]: value,
     }));
   };
@@ -29,9 +29,9 @@ export default function App() {
     event.preventDefault();
     alert("Inviato");
 
-    setArticle((currentArticle) => [...currentArticle, articleList]);
+    setPosts((currentPost) => [...currentPost, postsList]);
 
-    setArticleList({
+    setPostsList({
       title: "",
       tags: "",
       content: "",
@@ -43,10 +43,10 @@ export default function App() {
     <>
       <h1>Lista dei Post</h1>
       <ul>
-        {article.map((item) => (
-          <li key={item.title}>
-            {item.title} <hr /> {item.tags} <hr /> {item.content} <hr />{" "}
-            {item.image} <hr />
+        {posts.map((post) => (
+          <li key={post.title}>
+            {post.title} <hr /> {post.tags} <hr /> {post.content} <hr />{" "}
+            {post.image} <hr />
           </li>
         ))}
       </ul>
@@ -54,25 +54,25 @@ export default function App() {
         <h3>Aggiungi un post</h3>
         <input
           type="text"
-          value={articleList.title}
+          value={postsList.title}
           onChange={(event) => handleField("title", event.target.value)}
           placeholder="Scrivi l'articolo"
         />
         <input
           type="text"
-          value={articleList.tags}
+          value={postsList.tags}
           onChange={(event) => handleField("tags", event.target.value)}
           placeholder="Scrivi dei tag"
         />
         <input
           type="text"
-          value={articleList.content}
+          value={postsList.content}
           onChange={(event) => handleField("content", event.target.value)}
           placeholder="Scrivi il contenuto"
         />
         <input
           type="text"
-          value={articleList.image}
+          value={postsList.image}
           onChange={(event) => handleField("image", event.target.value)}
           placeholder="Inserisci URL immagine"
         />
