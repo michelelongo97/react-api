@@ -1,13 +1,22 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [article, setArticle] = useState([]);
   const [articleList, setArticleList] = useState({
     title: "",
-    author: "",
+    tags: "",
     content: "",
-    type: "",
+    image: "",
   });
+
+  const fetchArticle = () => {
+    axios.get("http://localhost:3000/posts").then(function (response) {
+      setArticle(response.data);
+    });
+  };
+
+  useEffect(fetchArticle, []);
 
   const handleField = (fieldName, value) => {
     setArticleList((currentArticleList) => ({
@@ -24,24 +33,25 @@ export default function App() {
 
     setArticleList({
       title: "",
-      author: "",
+      tags: "",
       content: "",
-      type: "",
+      image: "",
     });
   };
 
   return (
     <>
-      <h1>Lista di articoli</h1>
+      <h1>Lista dei Post</h1>
       <ul>
         {article.map((item) => (
           <li key={item.title}>
-            {item.title} - {item.author} - {item.content} - {item.type}
+            {item.title} <hr /> {item.tags} <hr /> {item.content} <hr />{" "}
+            {item.image} <hr />
           </li>
         ))}
       </ul>
       <form onSubmit={handleSubmit}>
-        <h3>Aggiungi articolo</h3>
+        <h3>Aggiungi un post</h3>
         <input
           type="text"
           value={articleList.title}
@@ -50,9 +60,9 @@ export default function App() {
         />
         <input
           type="text"
-          value={articleList.author}
-          onChange={(event) => handleField("author", event.target.value)}
-          placeholder="Scrivi l'autore"
+          value={articleList.tags}
+          onChange={(event) => handleField("tags", event.target.value)}
+          placeholder="Scrivi dei tag"
         />
         <input
           type="text"
@@ -60,14 +70,13 @@ export default function App() {
           onChange={(event) => handleField("content", event.target.value)}
           placeholder="Scrivi il contenuto"
         />
-        <select
-          value={articleList.type}
-          onChange={(event) => handleField("type", event.target.value)}
-        >
-          <option value="FrontEnd">FrontEnd</option>
-          <option value="BackEnd">BackEnd</option>
-          <option value="UI/UX">UI/UX</option>
-        </select>
+        <input
+          type="text"
+          value={articleList.image}
+          onChange={(event) => handleField("image", event.target.value)}
+          placeholder="Inserisci URL immagine"
+        />
+
         <button type="submit">Invia</button>
       </form>
     </>
