@@ -50,7 +50,8 @@ export default function App() {
         {posts.map((post) => (
           <li key={post.id}>
             <h2>{post.title}</h2> <h5> {post.tags}</h5> <p>{post.content}</p>
-            <br /> <img src={post.image} alt={post.title} />
+            <br />{" "}
+            <img src={`http://localhost:3000${post.image}`} alt={post.title} />
           </li>
         ))}
       </ul>
